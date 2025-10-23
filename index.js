@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const sequelize = require('./config/database'); // Impor koneksi database
+const User = require('./models/User');
 
 // Memuat konfigurasi .env
 dotenv.config();
@@ -24,6 +25,9 @@ const startServer = async () => {
     // Menguji koneksi database
     await sequelize.authenticate();
     console.log('Koneksi database MySQL berhasil.');
+
+    await sequelize.sync();
+    console.log('Semua model telah disinkronkan.');
 
     // Menjalankan server Express
     app.listen(PORT, () => {
